@@ -23,6 +23,6 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+test.beforeEach(async ({ todosAPI }) => {});
 
 test('GET completed todos by existing userId', async ({}) => {});

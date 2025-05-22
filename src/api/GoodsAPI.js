@@ -1,47 +1,20 @@
 import { expect } from '../../tests/_fixtures/fixtures';
 import { testStep } from '../common/helpers/pw';
+import { BaseAPI } from './BaseAPI';
 import { SUCCESS_CODE } from './constants/responceCodes';
 
-export class GoodsAPI {
-  constructor(request) {
-    this.request = request;
-  }
-
-  async step(title, stepToRun) {
-    return await testStep(title, stepToRun);
-  }
+export class GoodsAPI extends BaseAPI{
+  #url = '/students-api/goods';
 
   async getAllGoods() {
     return await this.step(`GET all goods`, async () => {
-      return await this.request.get('/students-api/goods', {});
+      return await this.request.get(this._getUrl(), {});
     });
   }
 
   async getGoodById(id) {
     return await this.step(`GET good by id`, async () => {
-      return await this.request.get(`/students-api/goods/${id}`, {});
-    });
-  }
-
-  parseStatus(response) {
-    return response.status();
-  }
-
-  async parseBody(response) {
-    return await response.json();
-  }
-
-  async assertSuccessResponseCode(response) {
-    await this.step(`Assert the code ${SUCCESS_CODE} is returned`, async () => {
-      expect(this.parseStatus(response)).toEqual(SUCCESS_CODE);
-    });
-  }
-
-  async assertBodyIsNotEmpty(response) {
-    await this.step(`Assert response body is not empty`, async () => {
-      const body = await this.parseBody(response);
-
-      expect(body).not.toBe([]);
+      return await this.request.get(`${this._getUrl()}/${id}`, {});
     });
   }
 
