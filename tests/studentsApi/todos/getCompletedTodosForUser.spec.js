@@ -45,7 +45,7 @@ test('GET completed todos by existing userId', async ({ todosAPI
     await todosAPI.assertSuccessResponseCode(response);
     const responseBody = await response.json();
     const firstTodo = responseBody[0];
-    
-    expect(firstTodo.userId).toEqual(userId);
-    expect(firstTodo.completed).toEqual(isCompleted);
+
+    todosAPI.assertTodoFieldEquals(firstTodo, 'userId', userId);
+    todosAPI.assertTodoFieldEquals(firstTodo, 'completed', isCompleted);
 });

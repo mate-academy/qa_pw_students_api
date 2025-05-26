@@ -23,6 +23,12 @@ export class BaseAPI {
     return await response.json();
   }
 
+  assertTodoFieldEquals(todo, field, expectedValue) {
+    return this.step(`Assert that the ${field} field in the todo entry is equal to ${expectedValue}`, async () => {
+      expect(todo[field]).toEqual(expectedValue);
+    });
+  }
+
   async assertSuccessResponseCode(response) {
     await this.step(`Assert the code ${SUCCESS_CODE} is returned`, async () => {
       expect(this.parseStatus(response)).toEqual(SUCCESS_CODE);
