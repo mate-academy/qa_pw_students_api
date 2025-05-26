@@ -6,9 +6,14 @@ import { BaseAPI } from "./BaseAPI";
 export class TodosAPI extends BaseAPI{
   _url = '/students-api/todos';
 
-  async getAllTodos() {
+  async getAllTodos(options = {
+    params: {
+      userId: undefined,
+      completed: undefined,
+    }
+  }) {
     return await this.step('GET all todos', async () => {
-      return await this.request.get(this._getUrl());
+      return await this.request.get(this._getUrl(), options);
     });
   }
 }
