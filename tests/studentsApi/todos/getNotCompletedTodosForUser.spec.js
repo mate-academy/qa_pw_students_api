@@ -1,5 +1,6 @@
 import { test } from '../../_fixtures/fixtures';
 
+
 /*
 Preconditions:
 1. Send GET request to '/todos' endpoint
@@ -17,12 +18,23 @@ options : { params: { userId, completed: false} }
 ```
 
 Test:
-1. Send GET request to '/todos' endpoint with params userId & completed=false 
+1. Send GET request to '/todos' endpoint with params userId & completed=false
 2. Assert that the Success Response code is received
 3. Assert that the userId field in Response Body has correct value correct
 4. Assert that the completed field in Response Body has correct value correct
 */
+let response;
+let userId;
 
-test.beforeEach(async ({}) => {});
+test.beforeEach(async ({ todosAPI }) => {
+  response = await todosAPI.getAllTodos();
+  todosAPI.assertSuccessResponseCode(response);
+  userId = await todosAPI.getUserIdByNotCompletedTodo(response);
+});
 
-test('GET completed todos by existing userId', async ({}) => {});
+test('GET completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getTodosByUserId(userId, false);
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertFieldIsCorrect(response, 'userId', userId);
+  await todosAPI.assertFieldIsCorrect(response, 'completed', false);
+});
