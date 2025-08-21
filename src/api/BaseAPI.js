@@ -22,7 +22,7 @@ export class BaseAPI {
 
   async assertBodyIsNotEmpty(response) {
     await this.step('Assert response body is not empty', async () => {
-      expect(this.parseBody(response)).not.toBe([]);
+      expect(await this.parseBody(response)).not.toEqual([]);
     });
   }
 

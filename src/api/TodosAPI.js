@@ -13,7 +13,7 @@ export class TodosAPI extends BaseAPI {
 
   async getAllTodos() {
     return  this.step('GET all todos', async () => {
-      return await this.request.get('students-api/todos', {});
+      return await this.request.get('/students-api/todos', {});
     });
   }
 
@@ -25,7 +25,7 @@ export class TodosAPI extends BaseAPI {
           completed,
         },
       };
-      return await this.request.get('students-api/todos', reqParams);
+      return await this.request.get('/students-api/todos', reqParams);
     })
   }
 
@@ -35,7 +35,7 @@ export class TodosAPI extends BaseAPI {
     await this.step('Get user with completed status', async () => {
       for (const todo of await this.parseBody(response)) {
 
-        if (await todo.completed === COMPLETED_STATUS) {
+        if (todo.completed === COMPLETED_STATUS) {
           searchedUserId = todo.userId;
           break;
         }
@@ -51,8 +51,9 @@ export class TodosAPI extends BaseAPI {
     await this.step('Get user with NOT completed status', async () => {
       for (const todo of await this.parseBody(response)) {
 
-        if (await todo.completed === NOT_COMPLETED_STATUS) {
+        if (todo.completed === NOT_COMPLETED_STATUS) {
           searchedUserId = todo.userId;
+          break;
         }
       }
     });
@@ -62,7 +63,7 @@ export class TodosAPI extends BaseAPI {
 
   async assertFieldIsCorrect(response, field, compareValue) {
     await this.step(
-      'Assert that the userId field has correct value',
+      `Assert that the ${field} field has correct ${compareValue}`,
       async () =>
       {
         const todos = await this.parseBody(response);

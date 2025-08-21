@@ -28,7 +28,7 @@ let userId;
 
 test.beforeEach(async ({ todosAPI }) => {
   response = await todosAPI.getAllTodos();
-  todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertSuccessResponseCode(response);
   userId = await todosAPI.getUserIdByNotCompletedTodo(response);
 });
 
