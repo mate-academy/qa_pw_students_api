@@ -1,7 +1,7 @@
 import { expect } from '../../tests/_fixtures/fixtures';
 import { BaseAPI } from './BaseAPI';
 
-export class ToDosAPI extends BaseAPI {
+export class TodosAPI extends BaseAPI {
   constructor(request) {
     super(request);
   }
@@ -23,16 +23,16 @@ export class ToDosAPI extends BaseAPI {
       const body = await this.parseBody(response);
       const allCompleted = body.every(el => el.completed);
 
-      expect(allCompleted).toBe(true);
+      expect(allCompleted, `All todos should be completed`).toBe(true);
     });
   }
 
   async assertAllTodosNotCompleted(response) {
-    await this.step(`Assert all todos are not completed`, async () => {
+    await this.step(`Assert all ToDos are not completed`, async () => {
       const body = await this.parseBody(response);
       const allNotCompleted = body.every(el => !el.completed);
 
-      expect(allNotCompleted, 'List of completed ToDos').toBe(true);
+      expect(allNotCompleted, `All todos should be not completed`).toBe(true);
     });
   }
 
@@ -41,7 +41,7 @@ export class ToDosAPI extends BaseAPI {
       const body = await this.parseBody(response);
       const allBelongToUser = body.every(el => el.userId === userId);
 
-      expect(allBelongToUser, 'List of NOT completed ToDos').toBe(true);
+      expect(allBelongToUser).toBe(true);
     });
   }
 }
