@@ -1,4 +1,4 @@
-import { test } from '../../_fixtures/fixtures';
+import { expect, test } from '../../_fixtures/fixtures';
 
 /*
 Preconditions:
@@ -23,6 +23,29 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+let userId;
+const isCompleted = true;
 
-test('GET completed todos by existing userId', async ({}) => {});
+test.beforeEach(async ({ todosAPI }) => {
+  const response = await todosAPI.getAllTodos({
+    params: { completed: !isCompleted }
+  });
+  await todosAPI.assertSuccessResponseCode(response);
+  const responseBody = await response.json();
+  userId = responseBody[0].userId;
+});
+
+test('GET completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getAllTodos({
+    params: {
+      userId,
+      completed: !isCompleted
+    }
+  });
+  await todosAPI.assertSuccessResponseCode(response);
+  const responseBody = await response.json();
+  const firstTodo = responseBody[0];
+
+  todosAPI.assertTodoFieldEquals(firstTodo, 'userId', userId);
+  todosAPI.assertTodoFieldEquals(firstTodo, 'completed', !isCompleted);
+});
