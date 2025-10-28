@@ -3,6 +3,7 @@ import { testStep } from '../common/helpers/pw';
 import { SUCCESS_CODE } from './constants/responceCodes';
 
 export class GoodsAPI {
+  
   constructor(request) {
     this.request = request;
   }
