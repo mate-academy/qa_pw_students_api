@@ -11,9 +11,13 @@ export function parseTestTreeHierarchy(fileName, logger) {
     capitalize(camelCaseToPhrase(attribute)),
   );
 
-  if (attributes[1].includes('.spec.js')) {
+  // Safety check: only access attributes[i] when it exists
+  const has1 = typeof attributes[1] === 'string';
+  const has2 = typeof attributes[2] === 'string';
+
+  if (has1 && attributes[1].includes('.spec.js')) {
     attributes = attributes.slice(0, 1);
-  } else if (attributes[2].includes('.spec.js')) {
+  } else if (has2 && attributes[2].includes('.spec.js')) {
     attributes = attributes.slice(0, 2);
   }
 

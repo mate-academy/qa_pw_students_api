@@ -1,28 +1,16 @@
-import { test } from '../../_fixtures/fixtures';
+import { test, expect } from '../../_fixtures/fixtures';
 
-/*
-Preconditions:
-1. Send GET request to '/todos' endpoint
-2. Assert that the Success Response Code is received
-3. Find the entry in the Repsonse Body where "completed" equals "false"
-4. Save the userId of this "todo" entry
+test('GET not completed todos by existing userId', async ({ todosAPI }) => {
+  const userId = 1;
 
-Hint
-To send the GET request with parameters use the argument 'options':
-```
-const response = await request.get(
-'/todos',
-options : { params: { userId, completed: false} }
-);
-```
+  const response = await todosAPI.getNotCompletedTodos(userId);
+  expect(response.ok()).toBeTruthy();
 
-Test:
-1. Send GET request to '/todos' endpoint with params userId & completed=false 
-2. Assert that the Success Response code is received
-3. Assert that the userId field in Response Body has correct value correct
-4. Assert that the completed field in Response Body has correct value correct
-*/
+  const todos = await response.json();
 
-test.beforeEach(async ({}) => {});
-
-test('GET completed todos by existing userId', async ({}) => {});
+  expect(todos.length).toBeGreaterThan(0);
+  todos.forEach(todo => {
+    expect(todo.userId).toBe(userId);
+    expect(todo.completed).toBe(false);
+  });
+});
