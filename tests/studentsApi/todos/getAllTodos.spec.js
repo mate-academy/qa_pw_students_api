@@ -1,10 +1,8 @@
-import { test } from '../../_fixtures/fixtures';
+import { test, expect } from '../../_fixtures/fixtures';
 
-/*
-Test:
-1. Send GET request to '/todos' endpoint
-2. Assert that the Success Response code is received
-3. Assert that the Body is not empty
-*/
+test('Get all todos', async ({ todosAPI }) => {
+  const response = await todosAPI.getAllTodos();
+  const body = await response.json();
 
-test('GET all todos', async ({}) => {});
+  expect(body.length).toBeGreaterThan(0);
+});
