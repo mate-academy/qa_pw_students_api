@@ -1,14 +1,10 @@
 import { expect } from '../../tests/_fixtures/fixtures';
-import { testStep } from '../common/helpers/pw';
 import { SUCCESS_CODE } from './constants/responceCodes';
+import { BaseAPI } from './BaseAPI';
 
-export class GoodsAPI {
+export class GoodsAPI extends BaseAPI {
   constructor(request) {
-    this.request = request;
-  }
-
-  async step(title, stepToRun) {
-    return await testStep(title, stepToRun);
+    super(request);
   }
 
   async getAllGoods() {
