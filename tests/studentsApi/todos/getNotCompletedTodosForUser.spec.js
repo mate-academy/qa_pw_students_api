@@ -1,5 +1,5 @@
-import { test } from '../../_fixtures/fixtures';
-
+import { SUCCESS_CODE } from '../../../src/api/constants/responceCodes';
+import { expect, test } from '../../_fixtures/fixtures';
 /*
 Preconditions:
 1. Send GET request to '/todos' endpoint
@@ -22,7 +22,33 @@ Test:
 3. Assert that the userId field in Response Body has correct value correct
 4. Assert that the completed field in Response Body has correct value correct
 */
+let savedUserId;
 
-test.beforeEach(async ({}) => {});
+test.beforeEach(async ({ request }) => {
+  const response = await request.get('/todos');
+  expect(response.status()).toBe(SUCCESS_CODE);
+  const body = await await response.json();
 
-test('GET completed todos by existing userId', async ({}) => {});
+  const completeToDo = body.find(todo => todo.completed === false);
+  expect(completeToDo).toBeDefined();
+
+  savedUserId = completeToDo.userId;
+});
+
+test('GET uncompleted todos by existing userId', async ({ request }) => {
+  const response = await request.get('/todos', {
+    params: {
+      userId: savedUserId,
+      completed: false,
+    },
+  });
+
+  expect(response.status()).toBe(SUCCESS_CODE);
+
+  const body = await response.json();
+
+  for (const todo of body) {
+    expect(todo.userId).toBe(savedUserId);
+    expect(todo.completed).toBe(false);
+  }
+});
