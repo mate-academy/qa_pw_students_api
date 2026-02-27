@@ -15,10 +15,18 @@ export class TodosAPI extends BaseAPI {
 
   async findTodo(response, status) {
     return await this.step(
-      `Find todo with paramater - completed: ${status}`,
+      `Find todo with parameter - completed: ${status}`,
       async () => {
         const body = await this.parseBody(response);
-        return body.find(todo => todo.completed === status);
+        const todo = body.find(item => item.completed === status);
+
+        expect(
+          todo,
+          `Todo with completed=${status} was not found`
+        )
+          .toBeDefined();
+
+        return todo;
       }
     );
   }

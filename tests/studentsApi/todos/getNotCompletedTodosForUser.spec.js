@@ -12,7 +12,7 @@ test.beforeEach(async ({ todosAPI }) => {
   userId = completedTodo.userId;
 });
 
-test('GET completed todos by existing userId', async ({ todosAPI }) => {
+test('GET not completed todos by existing userId', async ({ todosAPI }) => {
   const response = await todosAPI.getAllTodos({
     params: { userId, completed: false }
   });
