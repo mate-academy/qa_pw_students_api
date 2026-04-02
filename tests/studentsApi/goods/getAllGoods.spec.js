@@ -5,4 +5,5 @@ test('GET all goods', async ({ goodsAPI }) => {
 
   await goodsAPI.assertSuccessResponseCode(response);
   await goodsAPI.assertBodyIsNotEmpty(response);
+  await goodsAPI.assertSuccessResponseCode(response);
 });
