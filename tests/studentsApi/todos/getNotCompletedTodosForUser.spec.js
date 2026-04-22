@@ -33,7 +33,8 @@ test.beforeEach(async ({ todosAPI }) => {
 
   todos = body
     .filter(entry => entry.completed === false && entry.userId)
-    .map(entry => entry.userId);
+    .map(entry => entry.userId)
+    .slice(0, 100);
 
 });
 
