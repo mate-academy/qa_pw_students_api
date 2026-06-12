@@ -23,6 +23,19 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+let userId;
 
-test('GET completed todos by existing userId', async ({}) => {});
+test.beforeEach(async ({todosAPI}) => {
+  const response = await todosAPI.getAllTodos();
+  
+  await todosAPI.assertSuccessResponseCode(response);
+  userId = (await todosAPI.getFirstCompletedTodo(response)).userId;
+})
+
+test('GET completed todos by existing userId', async ({todosAPI}) => {
+  const response = await todosAPI.getCompletedTodosOfUser(userId);
+
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertUserIdOfTodos(response, userId);
+  await todosAPI.assertResponseHaveOnlyCompletedTodos(response, userId);
+});
