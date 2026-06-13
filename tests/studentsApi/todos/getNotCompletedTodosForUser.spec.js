@@ -37,5 +37,5 @@ test('GET not completed todos by existing userId', async ({ todosAPI }) => {
 
   await todosAPI.assertSuccessResponseCode(response);
   await todosAPI.assertUserIdOfTodos(response, userId);
-  await todosAPI.assertResponseHaveOnlyNotCompletedTodos(response, userId);
+  await todosAPI.assertResponseHaveOnlyNotCompletedTodos(response);
 });

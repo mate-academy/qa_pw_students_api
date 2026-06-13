@@ -20,51 +20,61 @@ export class TodosAPI extends BaseAPI {
   }
 
   async getFirstCompletedTodo(response) {
-    return await this.step(`Get first complited todo from the response`, async () => {
-      const body = await this.parseBody(response);
-      for (const todo of body) {
-        if (todo.completed) {
-          return todo;
+    return await this.step(
+      `Get first completed todo from the response`,
+      async () => {
+        const body = await this.parseBody(response);
+        for (const todo of body) {
+          if (todo.completed) {
+            return todo;
+          }
         }
-      }
-      throw new Error('Failed to find a completed todo in the response');
-    });
+        throw new Error('Failed to find a completed todo in the response');
+      },
+    );
   }
 
   async getFirstNotCompletedTodo(response) {
-    return await this.step(`Get first not complited todo from the response`, async () => {
-      const body = await this.parseBody(response);
-      for (const todo of body) {
-        if (!todo.completed) {
-          return todo;
+    return await this.step(
+      `Get first not completed todo from the response`,
+      async () => {
+        const body = await this.parseBody(response);
+        for (const todo of body) {
+          if (!todo.completed) {
+            return todo;
+          }
         }
-      }
-      throw new Error('Failed to find not completed todo in the response');
-    });
+        throw new Error('Failed to find not completed todo in the response');
+      },
+    );
   }
 
   async getCompletedTodosOfUser(userId) {
-    return await this.step(`Get all completed todos of user ${userId}`, async () => {
-      return await this.request.get(`/students-api/todos?userId=${userId}`, {
-        options: {
+    return await this.step(
+      `Get all completed todos of user ${userId}`,
+      async () => {
+        return await this.request.get(`/students-api/todos`, {
           params: {
-            complited: true,
+            userId,
+            completed: true,
           },
-        },
-      });
-    });
+        });
+      },
+    );
   }
 
   async getNotCompletedTodosOfUser(userId) {
-    return await this.step(`Get all not completed todos of user ${userId}`, async () => {
-      return await this.request.get(`/students-api/todos?userId=${userId}`, {
-        options: {
+    return await this.step(
+      `Get all not completed todos of user ${userId}`,
+      async () => {
+        return await this.request.get(`/students-api/todos`, {
           params: {
-            complited: false,
+            userId,
+            completed: false,
           },
-        },
-      });
-    });
+        });
+      },
+    );
   }
 
   async assertUserIdOfTodos(response, userId) {
