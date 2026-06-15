@@ -25,7 +25,7 @@ export class TodosAPI extends BaseAPI {
 
   async getTodoById(id) {
     return await this.step(`GET todo by id`, async () => {
-      return await this.request.get(`/students-api/goods/${id}`, {});
+      return await this.request.get(`/students-api/todos/${id}`, {});
     });
   }
 
