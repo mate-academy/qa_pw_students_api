@@ -5,7 +5,7 @@ let good;
 test.beforeEach(async ({ goodsAPI }) => {
   const response = await goodsAPI.getAllGoods();
 
-  await goodsAPI.assertSuccessResponseCode(response);
+  await goodsAPI.assertSuccessResponseCodeReceived(response);
 
   const body = await goodsAPI.parseBody(response);
 
@@ -18,7 +18,7 @@ test('GET good by existing good Id', async ({ goodsAPI }) => {
   const color = good.color;
   const response = await goodsAPI.getGoodById(goodId);
 
-  await goodsAPI.assertSuccessResponseCode(response);
+  await goodsAPI.assertSuccessResponseCodeReceived(response);
   await goodsAPI.assertNameIsCorrect(response, name);
   await goodsAPI.assertColorIsCorrect(response, color);
 });
