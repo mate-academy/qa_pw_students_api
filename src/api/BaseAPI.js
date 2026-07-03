@@ -27,8 +27,7 @@ async assertSuccessResponseCodeReceived(response) {
    async assertBodyIsNotEmpty(response) {
     await this.step(`Assert response body is not empty`, async () => {
       const body = await this.parseBody(response);
-
-      expect(body).not.toBe([]);
+      expect(body.length).toBeGreaterThan(0);
     });
   }
 

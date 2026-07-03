@@ -15,10 +15,10 @@ async getAllToDos() {
  
 
 
-async assertUserIdCorrect(response, userId) {
+async assertUserIdCorrect(todo, userId) {
      await this.step(`Assert the user id is correct`, async () => {
-      const body = await this.parseBody(response);
-      expect(body[0].userId).toEqual(userId);    });
+          expect(todo.userId).toEqual(userId);
+        });
   }
 
 

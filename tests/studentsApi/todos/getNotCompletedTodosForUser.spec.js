@@ -41,7 +41,7 @@ const response = await todosAPI.getNotCompletedTodosByUserId(user.id);
 await todosAPI.assertSuccessResponseCodeReceived(response);
 const result = await response.json();
 
-await todosAPI.assertUserIdCorrect(response, user.id);
+await todosAPI.assertUserIdCorrect(result[0], user.id);
 await todosAPI.assertCompletedFieldCorrect(result[0], false);
 
 });
