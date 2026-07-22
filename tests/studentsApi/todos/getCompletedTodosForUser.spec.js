@@ -15,7 +15,6 @@ const response = await request.get(
 options : { params: { userId, completed: true} }
 );
 ```
-
 Test:
 1. Send GET request to '/todos' endpoint with params userId & completed=true 
 2. Assert that the Success Response code is received
@@ -23,6 +22,20 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+let userId;
 
-test('GET completed todos by existing userId', async ({}) => {});
+test.beforeEach(async ({ todosAPI }) => {
+  const response = await todosAPI.getAllTodos();
+  const body = await response.json();
+
+  await todosAPI.assertSuccessResponseCode(response);
+  userId = body.filter(user => (user.completed === true))[0].userId;
+});
+
+test('GET completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getTodosByUserId(userId, true);
+
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertUserIdIsCorrect(response, userId);
+  await todosAPI.assertIsCompleted(response, true);
+});
