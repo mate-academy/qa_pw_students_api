@@ -1,5 +1,12 @@
 import { test } from '@playwright/test';
 
+/**
+ * @template T
+ * @param {string} title
+ * @param {() => T | Promise<T>} stepToRun
+ * @param {number} [userId]
+ * @returns {Promise<T>}
+ */
 export async function testStep(title, stepToRun, userId = 0) {
   let stepTitle = title;
 

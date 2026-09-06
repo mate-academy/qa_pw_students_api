@@ -5,11 +5,11 @@ import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: string;
+    addAllureTestHierarchy: string;
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [

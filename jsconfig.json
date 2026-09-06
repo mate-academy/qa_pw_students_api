@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": false,
+    "baseUrl": "."
+  },
+  "include": ["src/**/*", "tests/**/*", "playwright.config.js"],
+  "exclude": ["node_modules", "test-results", "allure-results"]
+}
