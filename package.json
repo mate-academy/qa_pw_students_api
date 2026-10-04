@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@faker-js/faker": "^9",
+    "@faker-js/faker": "^10.6.0",
     "playwright-core": "^1"
   },
   "devDependencies": {
