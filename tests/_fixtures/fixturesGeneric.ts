@@ -5,11 +5,11 @@ import { parseTestTreeHierarchy } from '../../src/common/helpers/allureHelpers';
 
 export const test = base.extend<
   {
-    infoTestLog;
-    addAllureTestHierarchy;
+    infoTestLog: string;
+    addAllureTestHierarchy: string;
   },
   {
-    logger;
+    logger: Logger;
   }
 >({
   logger: [
@@ -22,8 +22,9 @@ export const test = base.extend<
   ],
   infoTestLog: [
     async ({ logger }, use, testInfo) => {
-      const indexOfTestSubfolderStart = testInfo.file.indexOf('/tests') + 7;
-      const fileName = testInfo.file.substring(indexOfTestSubfolderStart);
+      const normalizedFile = testInfo.file.replaceAll('\\', '/');
+      const indexOfTestSubfolderStart = normalizedFile.indexOf('/tests') + 7;
+      const fileName = normalizedFile.substring(indexOfTestSubfolderStart);
 
       logger.info(`Test started: ${fileName}`);
 
