@@ -1,5 +1,5 @@
 import { test } from '../../_fixtures/fixtures';
-
+let userId;
 /*
 Preconditions:
 1. Send GET request to '/todos' endpoint
@@ -23,6 +23,23 @@ Test:
 4. Assert that the completed field in Response Body has correct value correct
 */
 
-test.beforeEach(async ({}) => {});
+test.beforeEach(async ({ todosAPI }) => {
+  const response = await todosAPI.getAllTodos();
 
-test('GET completed todos by existing userId', async ({}) => {});
+  await todosAPI.assertSuccessResponseCode(response);
+
+  const body = await todosAPI.parseBody(response);
+  const todo = body.find(
+    item => item.completed === false && item.userId != null,
+  );
+
+  userId = todo.userId;
+});
+
+test('GET not completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getTodosByUserAndStatus(userId, false);
+
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertUserIdIsCorrect(response, userId);
+  await todosAPI.assertCompletedIsCorrect(response, false);
+});
