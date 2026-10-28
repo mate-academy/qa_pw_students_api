@@ -1,28 +1,24 @@
 import { test } from '../../_fixtures/fixtures';
 
-/*
-Preconditions:
-1. Send GET request to '/todos' endpoint
-2. Assert that the Success Response Code is received
-3. Find the entry in the Repsonse Body where "completed" equals "false"
-4. Save the userId of this "todo" entry
+let userId;
 
-Hint
-To send the GET request with parameters use the argument 'options':
-```
-const response = await request.get(
-'/todos',
-options : { params: { userId, completed: false} }
-);
-```
+test.beforeEach(async ({ todosApi }) => {
+  const response = await todosApi.getAllTodos();
 
-Test:
-1. Send GET request to '/todos' endpoint with params userId & completed=false 
-2. Assert that the Success Response code is received
-3. Assert that the userId field in Response Body has correct value correct
-4. Assert that the completed field in Response Body has correct value correct
-*/
+  await todosApi.assertSuccessResponseCode(response);
 
-test.beforeEach(async ({}) => {});
+  const body = await todosApi.parseBody(response);
 
-test('GET completed todos by existing userId', async ({}) => {});
+  const todo = todosApi.findFirstNotCompletedTodoWithUser(body);
+
+  await todosApi.assertTodoIsFound(todo);
+  userId = todo.userId;
+});
+
+test('GET Not completed todos by existing userId', async ({ todosApi }) => {
+  const response = await todosApi.getNotCompletedTodosForUser(userId);
+
+  await todosApi.assertSuccessResponseCode(response);
+  await todosApi.assertTodosBelongToUser(response, userId);
+  await todosApi.assertTodosNotCompleted(response, false);
+});
