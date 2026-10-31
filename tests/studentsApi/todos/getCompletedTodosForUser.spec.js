@@ -9,7 +9,9 @@ test.beforeEach(async ({ todosAPI }) => {
 
   const body = await todosAPI.parseBody(response);
 
-  const completedTodo = body.find(todo => todo.completed === true);
+  const completedTodo = body.find(
+    todo => todo.completed === true && Number.isInteger(todo.userId)
+  );
 
   expect(completedTodo).toBeDefined();
 

@@ -4,24 +4,19 @@ import { expect } from '@playwright/test';
 export class TodosAPI extends BaseAPI {
   
   async getAllTodos() {
-    return await this.step(`GET all todos`, async () => {
-      return await this.request.get(
-        'https://jsonplaceholder.typicode.com/todos'
-      );
+    return await this.step('GET all todos', async () => {
+      return await this.request.get('/students-api/todos');
     });
   }
 
   async getTodosForUser(userId, completed) {
     return await this.step(`GET todos for user ${userId}`, async () => {
-      return await this.request.get(
-        'https://jsonplaceholder.typicode.com/todos',
-        {
-          params: {
-            userId,
-            completed,
-          },
-        }
-      );
+      return await this.request.get('/students-api/todos', {
+        params: {
+          userId,
+          completed,
+        },
+      });
     });
   }
 
