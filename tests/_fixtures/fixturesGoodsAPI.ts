@@ -8,5 +8,5 @@ export const test = base.extend<{
     const client = new GoodsAPI(request);
 
     await use(client);
-  },
+  },  
 });
