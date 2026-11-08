@@ -33,7 +33,7 @@ test.beforeEach(async ({ todosAPI }) => {
 });
 
 test('GET completed todos by existing userId', async ({ todosAPI }) => {
-  const response = await todosAPI.getAllTodos({ params: { userId, completed: true } });
+  const response = await todosAPI.getCompletedTodosForUser(userId);
   await todosAPI.assertSuccessResponseCode(response);
   await todosAPI.assertBodyIsNotEmpty(response);
   await todosAPI.assertUserIdIsCorrect(response, userId);

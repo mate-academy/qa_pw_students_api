@@ -8,6 +8,22 @@ export class TodosAPI extends BaseAPI {
     });
   }
 
+  async getCompletedTodosForUser(userId) {
+    return await this.step(`GET completed todos for user`, async () => {
+      return await this.request.get(`/students-api/todos`, {
+        params: { userId, completed: true },
+      });
+    });
+  }
+
+  async getNotCompletedTodosForUser(userId) {
+    return await this.step(`GET not completed todos for user`, async () => {
+      return await this.request.get(`/students-api/todos`, {
+        params: { userId, completed: false },
+      });
+    });
+  }
+
   async assertUserIdIsCorrect(response, userId) {
     await this.step(`Assert the userId is correct`, async () => {
       const body = await this.parseBody(response);
