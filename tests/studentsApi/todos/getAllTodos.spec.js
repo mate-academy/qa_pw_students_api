@@ -7,4 +7,9 @@ Test:
 3. Assert that the Body is not empty
 */
 
-test('GET all todos', async ({}) => {});
+test('GET all todos', async ({ toDosAPI }) => {
+  const response = await toDosAPI.getAllToDos();
+
+  await toDosAPI.assertSuccessResponseCode(response);
+  await toDosAPI.assertBodyIsNotEmpty(response);
+});
