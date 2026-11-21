@@ -1,7 +1,7 @@
 import { expect } from '../../tests/_fixtures/fixtures';
 import { BaseAPI } from './BaseAPI';
 
-export class ToDosAPI extends BaseAPI {
+export class TodosAPI extends BaseAPI {
   constructor(request) {
     super(request);
   }

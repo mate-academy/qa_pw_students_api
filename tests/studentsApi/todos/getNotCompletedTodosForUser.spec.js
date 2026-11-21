@@ -25,16 +25,16 @@ Test:
 
 let userId;
 
-test.beforeEach(async ({ toDosAPI }) => {
-  const response = await toDosAPI.getAllToDos();
+test.beforeEach(async ({ todosAPI }) => {
+  const response = await todosAPI.getAllToDos();
 
-  await toDosAPI.assertSuccessResponseCode(response);
-  userId = await toDosAPI.getUserIdWithNotCompletedToDos(response);
+  await todosAPI.assertSuccessResponseCode(response);
+  userId = await todosAPI.getUserIdWithNotCompletedToDos(response);
 });
 
-test('GET not completed todos by existing userId', async ({ toDosAPI }) => {
-  const response = await toDosAPI.getNotCompletedToDosByUserId(userId);
-  await toDosAPI.assertSuccessResponseCode(response);
-  await toDosAPI.assertAllToDosNotCompleted(response);
-  await toDosAPI.assertAllToDosHaveUserId(response, userId);
+test('GET not completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getNotCompletedToDosByUserId(userId);
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertAllToDosNotCompleted(response);
+  await todosAPI.assertAllToDosHaveUserId(response, userId);
 });

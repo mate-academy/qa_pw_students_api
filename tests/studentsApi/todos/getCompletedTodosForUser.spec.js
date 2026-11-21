@@ -25,16 +25,16 @@ Test:
 
 let userId;
 
-test.beforeEach(async ({ toDosAPI }) => {
-  const response = await toDosAPI.getAllToDos();
+test.beforeEach(async ({ todosAPI }) => {
+  const response = await todosAPI.getAllToDos();
 
-  await toDosAPI.assertSuccessResponseCode(response);
-  userId = await toDosAPI.getUserIdWithCompletedToDos(response);
+  await todosAPI.assertSuccessResponseCode(response);
+  userId = await todosAPI.getUserIdWithCompletedToDos(response);
 });
 
-test('GET completed todos by existing userId', async ({ toDosAPI }) => {
-  const response = await toDosAPI.getCompletedToDosByUserId(userId);
-  await toDosAPI.assertSuccessResponseCode(response);
-  await toDosAPI.assertAllToDosCompleted(response);
-  await toDosAPI.assertAllToDosHaveUserId(response, userId);
+test('GET completed todos by existing userId', async ({ todosAPI }) => {
+  const response = await todosAPI.getCompletedToDosByUserId(userId);
+  await todosAPI.assertSuccessResponseCode(response);
+  await todosAPI.assertAllToDosCompleted(response);
+  await todosAPI.assertAllToDosHaveUserId(response, userId);
 });
